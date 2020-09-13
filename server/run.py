@@ -1,0 +1,1 @@
+from stocky import app
