@@ -6,6 +6,8 @@ const Login = ( props ) => {
 
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
+    const [error, setError] = useState();
+    const [errorMessage, setErrorMessage] = useState();
 
     const setEmailHandler = (event) => {
         setEmail(event.target.value)
@@ -20,13 +22,20 @@ const Login = ( props ) => {
 
         console.log(email);
         console.log(password);
+
+        setTimeout(() => {
+            setError(true);
+            setErrorMessage(
+                <p className={classes.login__formError}>Please enter your Email and/or Password and retry.</p>
+            )
+        }, 3000)
     }
 
     return (
         <div className={classes.login}>
             <form className={classes.login__form} onSubmit={login}>
-                <h1 className={classes.login__formTitle}>login</h1>
-                <p className={classes.login__formError}>Please enter your Email and/or Password and retry.</p>
+                <h1 className={!error ? classes.login__formTitle : ''}>login</h1>
+                {errorMessage}
                 <label htmlFor="email">
                     <input 
                         type="email" 
