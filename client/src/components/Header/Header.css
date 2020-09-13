@@ -1,0 +1,95 @@
+.header {
+    background-color: var(--clr-accent);
+    position: fixed;
+    top:0;
+    left:0;
+    right: 0;
+}
+
+.header__body {
+    padding: 0 .5em;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.header__bodyMenu {
+    padding: 0 .5em;
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.header__logo {
+    font-size: var(--fs-header-logo);
+    color: var(--clr-light);
+    font-variant: small-caps;
+    font-weight: 700;
+    letter-spacing: .1em;
+    padding: 0 .25em;
+}
+.header__navMenu,
+.header__nav {
+    font-size: var(--fs-header-nav);   
+}
+
+.header__navMenuLinks {
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header__navLink {
+    
+    color: var(--clr-light);
+    padding: .5em 1em;
+    transition: .2s ease;
+}
+
+.login_link { 
+    border: 1px solid var(--clr-light);
+}
+
+.header__navMenuLink {
+    color: var(--clr-light);
+    padding: 0 .5em;
+    transition: .2s ease;
+    font-size: 1.2rem;
+}
+.header__navLink:hover,
+.header__navLink:active {
+    color: var(--clr-accent);
+    background-color: var(--clr-light);
+    border: 1px solid var(--clr-accent);
+}
+
+.header__navMenuLink:hover,
+.header__navMenuLink:active {
+    border-bottom: 2px solid var(--clr-light);
+}
+
+@media (min-width: 800px) {
+    .header {
+        display: flex;
+        justify-content: center;
+    }
+
+    .header__body,
+    .header__bodyMenu {
+        max-width: 960px;
+    }
+
+    .header__bodyMenu {
+        flex-flow: row nowrap;
+        justify-content: space-between;
+    }
+
+    .header__navMenuLink {
+        font-size: 1.5rem;
+    }
+
+}

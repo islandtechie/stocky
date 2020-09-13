@@ -1,0 +1,9 @@
+
+.footer {
+    color: var(--clr-light)
+}
+
+.footer a {
+    color: var(--clr-accent);
+    margin-left: .5em;
+}

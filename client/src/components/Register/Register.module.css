@@ -1,0 +1,80 @@
+@import "../../App.css";
+
+.register {
+    width: 100%;
+    max-width: 960px;    
+    align-self: center;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+ }
+ 
+ .register__form {
+     width: 90%;
+     background-color: var(--clr-accent);
+     margin: 0 1em;
+     padding: 1em 4em;
+     text-align: center;
+     color: var(--clr-dark);
+ }
+ 
+ 
+ .register__formTitle {
+     font-variant: small-caps;
+     font-weight: bold;
+     font-size: var(--fs-register-title);
+     margin: 0 0 .5em 0;
+ }
+ 
+ .register__formEmail,
+ .register__formPassword {
+     width: 100%;
+     font-family: inherit;
+     margin: .5em 0;
+     padding: 1em;
+     font-size: 1.2rem;
+     outline-color: var(--clr-accent);
+ }
+ 
+ .register__formButton {
+     display: inline-block;
+     border: 1px solid var(--clr-light);
+     color: var(--clr-light);
+     background-color: transparent;
+     font-size: 2rem;
+     font-weight: 700;
+     padding: .5em 2em;
+     margin: .5em 0em .5em 0em;
+     transition: .2s ease;
+ }
+ 
+ .register__formButton:hover,
+ .register__formButton:focus {
+     color: var(--clr-accent);
+     background-color: var(--clr-light);
+     cursor: pointer;
+ }
+ 
+ .register__formLink a {
+     text-decoration: underline;
+     color: var(--clr-light);
+     font-size: 1.2rem;
+ }
+ 
+ .register__formLink a:hover {
+     text-decoration: underline;
+     color: var(--clr-dark);
+ }
+ 
+ .register__form--error {
+     font-size: 1.2rem;
+     color: var(--clr-light);
+     border: 3px solid red;
+ }
+ 
+ @media (min-width: 800px) {
+    .register__form {
+        max-width: 700px;
+        /* padding: 1em 2em; */
+    }
+}
