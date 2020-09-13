@@ -1,34 +1,23 @@
-@import "../../App.css";
+.register {
+    padding: 1em .5em;
+}
 
-.login {
-    width: 100%;
-    max-width: 960px;    
-    align-self: center;
+.register__form {
     margin: 0 auto;
-    margin-top: 5em;
-    display: flex;
-    justify-content: center;
- }
-
- .login__form {
-    width: 90%;
     background-color: var(--clr-accent);
-    margin: 0 1em;
-    padding: 2em 4em;
+    padding: 1em 4em;
     text-align: center;
     color: var(--clr-dark);
-    min-width: 300px;
 }
 
-.login__formTitle {
+.register__formTitle {
     font-variant: small-caps;
     font-weight: bold;
-    font-size: var(--fs-login-title);
-    margin: .5em;
+    margin-bottom: .5em;
 }
 
-.login__formEmail,
-.login__formPassword {
+.register__formEmail,
+.register__formPassword {
     width: 100%;
     font-family: inherit;
     margin: .5em 0;
@@ -37,7 +26,7 @@
     outline-color: var(--clr-accent);
 }
 
-.login__formButton {
+.register__formButton {
     display: inline-block;
     border: 1px solid var(--clr-light);
     color: var(--clr-light);
@@ -47,40 +36,36 @@
     padding: .5em 2em;
     margin: .5em 0em .5em 0em;
     transition: .2s ease;
-    outline: none;
 }
 
-.login__formButton:hover{
-    color: var(--clr-dark);
+.register__formButton:hover,
+.register__formButton:focus {
+    color: var(--clr-accent);
     background-color: var(--clr-light);
     cursor: pointer;
 }
 
-
-.login__formButton:active {
-    color: var(--clr-light);
-    background-color: transparent;
-}
-
-.login__formLink a {
+.register__formLink a {
     text-decoration: underline;
     color: var(--clr-light);
     font-size: 1.2rem;
 }
 
-.login__formLink a:hover {
+.register__formLink a:hover {
     text-decoration: underline;
     color: var(--clr-dark);
 }
 
-.login__formError {
+.register__form--error {
     font-size: 1.2rem;
     color: var(--clr-light);
     border: 3px solid red;
 }
 
-@media (min-width: 800px) {
-    .login__form {
+
+ @media (min-width: 800px) {
+    .register__form {
         max-width: 700px;
+        /* padding: 1em 2em; */
     }
 }
