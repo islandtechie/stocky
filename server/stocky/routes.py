@@ -10,14 +10,14 @@ from stocky.models import User
 @app.route('/login', methods=['POST'])
 @cross_origin()
 def login():
-    try:
+
         user = User.query.filter_by(email=request.form['email']).first()
-        if user is None:
-            raise Exception()
-    except urllib.error.HTTPError as err:
-        if err.code == 404:
-            print('yo404')
-            return 'missing'
+
+        if user:
+            print('hello')
+            return 'user exists', 200
+        else:
+            return 'Please Check Your credentials', 404
 
 @app.route('/register', methods=['POST'])
 def register():
