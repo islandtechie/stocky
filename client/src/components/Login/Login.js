@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import classes from './Login.module.css'
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 const Login = ( props ) => {
 
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
-    const [error, setError] = useState();
+    const [email, setEmail] = useState('jane@doe.com');
+    const [password, setPassword] = useState('password');
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isError, setIsError] = useState(false);
     const [errorMessage, setErrorMessage] = useState();
 
     const setEmailHandler = (event) => {
@@ -20,27 +21,33 @@ const Login = ( props ) => {
     const login = (event) => {
         event.preventDefault();
 
+        
+
         console.log(email);
         console.log(password);
 
         setTimeout(() => {
-            setError(true);
+            setIsError(true);
             setErrorMessage(
                 <p className={classes.login__formError}>Please enter your Email and/or Password and retry.</p>
             )
         }, 3000)
     }
 
+    if ( isLoggedIn ) {
+        return <Redirect to='/landing-page' />
+    }
+
     return (
         <div className={classes.login}>
             <form className={classes.login__form} onSubmit={login}>
-                <h1 className={!error ? classes.login__formTitle : ''}>login</h1>
-                {errorMessage}
+                <h1 className={classes.login__formTitle}>login</h1>
+                {isError ? errorMessage : ''}
                 <label htmlFor="email">
                     <input 
                         type="email" 
                         name="email" 
-                        id="email"
+                        value={email}
                         className={classes.login__formEmail} 
                         placeholder="Jane@Doe.com" 
                         aria-placeholder="email" 
@@ -51,7 +58,7 @@ const Login = ( props ) => {
                     <input 
                         type="password" 
                         name="password" 
-                        id="password" 
+                        value={password}
                         className={classes.login__formPassword} 
                         placeholder="Password" 
                         aria-placeholder="password" 
