@@ -18,20 +18,21 @@ const Login = ( props ) => {
         setPassword(event.target.value);
     }
 
-    const login = (event) => {
+    const login = aysn (event) => {
         event.preventDefault();
 
+         const data = await fetch('http://127.0.0.1:7000/login')
         
 
-        console.log(email);
-        console.log(password);
+        // console.log(email);
+        // console.log(password);
 
-        setTimeout(() => {
-            setIsError(true);
-            setErrorMessage(
-                <p className={classes.login__formError}>Please enter your Email and/or Password and retry.</p>
-            )
-        }, 3000)
+        // setTimeout(() => {
+        //     setIsError(true);
+        //     setErrorMessage(
+        //         <p className={classes.login__formError}>Please enter your Email and/or Password and retry.</p>
+        //     )
+        // }, 3000)
     }
 
     if ( isLoggedIn ) {

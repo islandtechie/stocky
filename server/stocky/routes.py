@@ -13,23 +13,24 @@ def login():
 @app.route('/register', methods=['POST'])
 def register():
     data = request.form
+    return 'you made it'
 
-    user = User(
-        email=data['email'],
-        password= generate_password_hash(data['password'], method='pbkdf2:sha256', salt_length=12),
-        created=datetime.datetime.now(),
-        updated=datetime.datetime.now()
-    )
+    # user = User(
+    #     email=data['email'],
+    #     password= generate_password_hash(data['password'], method='pbkdf2:sha256', salt_length=12),
+    #     created=datetime.datetime.now(),
+    #     updated=datetime.datetime.now()
+    # )
 
-    try:
-        db.session.add(user)
-        db.session.commit()
+    # try:
+    #     db.session.add(user)
+    #     db.session.commit()
 
-        return 'User created sucessfully', 201
+    #     return 'User created sucessfully', 201
 
-    except exc.DBAPIError as e:
-        print(e.)
-        return 'Please try again. SOmething went wrong', 500
+    # except exc.DBAPIError as e:
+    #     print(e.)
+    #     return 'Please try again. SOmething went wrong', 500
 
-        pass
+    #     pass
 
