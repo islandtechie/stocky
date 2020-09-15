@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {Switch, Route} from 'react-router-dom'; 
 import './App.css';
 import Layout from './containers/Layout/Layout';
@@ -10,9 +10,16 @@ import LandingPage from './components/LandingPage/LandingPage';
 import { AuthContext } from "./context/auth";
 
 const App = () => {
-
+  const existingTokens = JSON.parse(localStorage.getItem("tokens"));
+  
+  const [authTokens, setAuthTokens] = useState(existingTokens);
+  
+  const setTokens = (data) => {
+    localStorage.setItem("tokens", JSON.stringify(data));
+    setAuthTokens(data);
+  }
   return (
-    <AuthContext.Provider value={false}>
+    <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
       <Layout>
         <Switch>
           <PrivateRoute path='/private' component={LandingPage} />

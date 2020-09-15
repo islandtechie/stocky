@@ -1,4 +1,5 @@
 import datetime
+import urllib
 from flask import request, flash
 from flask_cors import cross_origin
 from sqlalchemy import exc
@@ -9,8 +10,14 @@ from stocky.models import User
 @app.route('/login', methods=['POST'])
 @cross_origin()
 def login():
-    print(request.form)
-    return 'something went wrong'
+    try:
+        user = User.query.filter_by(email=request.form['email']).first()
+        if user is None:
+            raise Exception()
+    except urllib.error.HTTPError as err:
+        if err.code == 404:
+            print('yo404')
+            return 'missing'
 
 @app.route('/register', methods=['POST'])
 def register():

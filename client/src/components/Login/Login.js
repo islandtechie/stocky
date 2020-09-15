@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import classes from './Login.module.css'
 import { Link, Redirect } from 'react-router-dom';
+import { useAuth } from '../../context/auth';
 
 const Login = ( props ) => {
 
@@ -10,6 +11,7 @@ const Login = ( props ) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isError, setIsError] = useState(false);
     const [errorMessage, setErrorMessage] = useState();
+    const { setAuthTokens } = useAuth();
 
     const setEmailHandler = (event) => {
         setEmail(event.target.value)
@@ -26,7 +28,9 @@ const Login = ( props ) => {
 
         axios.post('http://127.0.0.1:7000/login', formData)
         .then((res) => {
-            console.log(res.data)
+            if ( res.status === 200) {
+                console.log(res.data);
+            }
         })
         .catch((err) => console.log(err.response))
 
