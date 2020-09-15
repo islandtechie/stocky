@@ -1,14 +1,16 @@
 import datetime
 from flask import request, flash
+from flask_cors import cross_origin
 from sqlalchemy import exc
 from werkzeug.security import generate_password_hash, check_password_hash
 from stocky import app, db, ma
 from stocky.models import User
 
 @app.route('/login', methods=['POST'])
+@cross_origin(origin='*')
 def login():
     print(request.form)
-    return 'hello'
+    return 'hello', 200
 
 @app.route('/register', methods=['POST'])
 def register():

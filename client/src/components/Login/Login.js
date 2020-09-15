@@ -18,12 +18,17 @@ const Login = ( props ) => {
         setPassword(event.target.value);
     }
 
-    const login = aysn (event) => {
+    const login = (event) => {
         event.preventDefault();
 
-         const data = await fetch('http://127.0.0.1:7000/login')
-        
+        console.log(event.target);
 
+        const formData = new FormData(event.target);
+
+        console.log(formData);
+
+
+        
         // console.log(email);
         // console.log(password);
 
