@@ -7,10 +7,10 @@ from stocky import app, db, ma
 from stocky.models import User
 
 @app.route('/login', methods=['POST'])
-@cross_origin(origin='*')
+@cross_origin()
 def login():
     print(request.form)
-    return 'hello', 200
+    return 'something went wrong'
 
 @app.route('/register', methods=['POST'])
 def register():

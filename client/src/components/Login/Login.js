@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import classes from './Login.module.css'
 import { Link, Redirect } from 'react-router-dom';
 
@@ -21,12 +22,13 @@ const Login = ( props ) => {
     const login = (event) => {
         event.preventDefault();
 
-        console.log(event.target);
-
         const formData = new FormData(event.target);
 
-        console.log(formData);
-
+        axios.post('http://127.0.0.1:7000/login', formData)
+        .then((res) => {
+            console.log(res.data)
+        })
+        .catch((err) => console.log(err.response))
 
         
         // console.log(email);
