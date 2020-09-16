@@ -32,19 +32,19 @@ const Login = ( props ) => {
                 console.log(res.data);
             }
         })
-        .catch((err) => console.log(err.response))
-
-        
-        // console.log(email);
-        // console.log(password);
-
-        // setTimeout(() => {
-        //     setIsError(true);
-        //     setErrorMessage(
-        //         <p className={classes.login__formError}>Please enter your Email and/or Password and retry.</p>
-        //     )
-        // }, 3000)
+        .catch((err) => {
+             if (err.response) {
+                setIsError(true);
+                setErrorMessage(
+                    <p className={classes.login__formError}>{err.response.data}
+                        or <Link to="/register">Register Here</Link>
+                    </p>
+                )
+             }
+        })
     }
+
+   
 
     if ( isLoggedIn ) {
         return <Redirect to='/landing-page' />
