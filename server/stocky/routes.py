@@ -54,7 +54,7 @@ def register():
 
     user = User.query.filter_by(email=request.form['email']).first()
 
-    if user is not None;
+    if user is not None:
          user = User(
             email=data['email'],
             password= generate_password_hash(data['password'], method='pbkdf2:sha256', salt_length=12),

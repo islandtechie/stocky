@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import './Register.css'
 import { Link } from 'react-router-dom';
 
@@ -32,13 +33,19 @@ const Register = () => {
 
         let formData = '';
 
+        console.log(password);
+        console.log(password2);
+
         if ( password === password2) {
-            formData = new FormData({
+            formData = {
                 email: email,
                 password: password
-            })
+            }
 
-            console.log('formdata', formData);
+            axios.post("http://127.0.0.1:7000/register", formData)
+                .then(res => console.log(res.data))
+                .catch(err => console.log(err.response));
+
         } else {
             setIsError(true);
             setErrorMessage(
