@@ -33,11 +33,12 @@ def login():
                 app.config.get('SECRET_KEY'),
                 algorithm='HS256'
             )
+            print(bytes.decode(token))
             # return user token 
             responseObject = {
                 'status': 'success',
                 'message': 'logged in',
-                'token': token,
+                'token': bytes.decode(token),
                 'code': 201
             }
 
@@ -117,4 +118,5 @@ def register():
     #             'status': 'failed',
     #             'message': 'User already exist'
     #     }
+
 
