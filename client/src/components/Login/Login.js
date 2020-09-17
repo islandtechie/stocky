@@ -26,7 +26,7 @@ const Login = ( props ) => {
 
         const formData = new FormData(event.target);
 
-        axios.post('http://127.0.0.1:7000/login', formData)
+        axios.post('http://127.0.0.1:5000/login', formData)
         .then((res) => {
             if ( res.status === 200) {
                 console.log(res.data);
