@@ -12,14 +12,10 @@ def login():
     responseObject = ''
     try:
         user = User.query.filter_by(email=request.form['email']).first()
-        print(user.email)
-        print(user.password)
 
         #check user creds
         is_authenticated = check_password_hash(user.password, request.form['password'])
-
-        print(is_authenticated)
-       
+        
         if is_authenticated:
             print('PASS')
             #create token for user
@@ -39,7 +35,7 @@ def login():
                 'status': 'success',
                 'message': 'logged in',
                 'token': bytes.decode(token),
-                'code': 201
+                'code': 200
             }
 
     except Exception as e:
@@ -77,47 +73,5 @@ def register():
         }
 
     return make_response(jsonify(responseObject)), responseObject['code']
-
-    # user = User(
-    #     email=data['email'],
-    #     password= generate_password_hash(data['password'], method='pbkdf2:sha256', salt_length=12),
-    #     
-    #     updated=datetime.datetime.now()
-    # )
-
-    # try:
-    #     db.session.add(user)
-    #     db.session.commit()
-
-    #     return 'User created sucessfully', 201
-
-    # except exc.DBAPIError as e:
-    #     print(e.)
-    #     return 'Please try again. SOmething went wrong', 500
-
-    #     pass
-    # if user is not None:
-    #      user = User(
-    #         email=data['email'],
-    #         password= generate_password_hash(data['password'], method='pbkdf2:sha256', salt_length=12),
-    #         created=datetime.datetime.now(),
-    #         updated=datetime.datetime.now()
-    #     )
-
-    #     db.session.add(user)
-    #     db.session.commit()
-
-    #     responseObject = {
-    #         'status': 'success',
-    #         'message': 'Successfully registered.'
-    #     }
-
-    #     return make_response(jsonify(responseObject)), 201
-
-    # else:
-    #     response = {
-    #             'status': 'failed',
-    #             'message': 'User already exist'
-    #     }
 
 

@@ -1,8 +1,14 @@
 import React, {Fragment} from 'react';
+import { useHistory } from 'react-router-dom';
 import './Home.css';
 import Footer from '../../components/Footer/Footer';
+import { useAuth } from '../../context/auth';
 
 const Home = () => {
+    const { authToken } = useAuth();
+    let history = useHistory();
+
+    if ( authToken ) history.push('/landing-page');
     return (
         <Fragment>
             <div className="home">

@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import classes from './Login.module.css'
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import { useAuth } from '../../context/auth';
 
 const Login = ( props ) => {
 
     const [email, setEmail] = useState('jane@doe.com');
     const [password, setPassword] = useState('password');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isError, setIsError] = useState(false);
     const [errorMessage, setErrorMessage] = useState();
-    const { setAuthTokens } = useAuth();
+    const { setAuthTokens, authToken } = useAuth();
+    let history = useHistory();
+
+    if ( authToken ) history.push('/landing-page');
 
     const setEmailHandler = (event) => {
         setEmail(event.target.value)
@@ -23,32 +25,26 @@ const Login = ( props ) => {
 
     const login = (event) => {
         event.preventDefault();
-        
+        console.log('hello i hit')
         const formData = new FormData(event.target);
 
         axios.post('http://127.0.0.1:5000/login', formData)
         .then((res) => {
-            if ( res.status === 200) {
-                console.log(res.data);
-            }
+                setAuthTokens(res.data['token']);
         })
         .catch((err) => {
              if (err.response) {
-                setIsError(true);
-                setErrorMessage(
-                    <p className={classes.login__formError}>{err.response.data}
-                        or <Link to="/register">Register Here</Link>
-                    </p>
-                )
+                 console.log(err.response)
+                // setIsError(true);
+                // setErrorMessage(
+                //     <p className={classes.login__formError}>{err.response.data}
+                //         or <Link to="/register">Register Here</Link>
+                //     </p>
+                // )
              }
         })
     }
 
-   
-
-    if ( isLoggedIn ) {
-        return <Redirect to='/landing-page' />
-    }
 
     return (
         <div className={classes.login}>

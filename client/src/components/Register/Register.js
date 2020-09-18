@@ -46,7 +46,7 @@ const Register = ({ props }) => {
             axios.post("http://127.0.0.1:5000/register", formData)
                 .then(res => {
                     if (res.status === 201) {
-                        history.push('/login');
+                    history.push('/login');
                     }
                 })
                 .catch(err => console.log(err.response));
