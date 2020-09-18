@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import './Register.css'
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
-const Register = () => {
+const Register = ({ props }) => {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [password2, setPassword2] = useState();
     const [isError, setIsError] = useState(false);
     const [errorMessage, setErrorMessage] = useState();
+
+    let history = useHistory();
+    console.log(props)
 
     const formHandler = ( event ) => {
         let {name, value} = event.target;
@@ -28,22 +32,23 @@ const Register = () => {
         }
     }
 
+    
+
     const register = (event) => {
         event.preventDefault();
 
-        let formData = '';
-
-        console.log(password);
-        console.log(password2);
-
         if ( password === password2) {
-            formData = {
-                email: email,
-                password: password
-            }
+            const formData = new FormData();
+            formData.append("email", email);
+            formData.append("password", password);
+            
 
-            axios.post("http://127.0.0.1:7000/register", formData)
-                .then(res => console.log(res.data))
+            axios.post("http://127.0.0.1:5000/register", formData)
+                .then(res => {
+                    if (res.status === 201) {
+                        history.push('/login');
+                    }
+                })
                 .catch(err => console.log(err.response));
 
         } else {
@@ -52,26 +57,7 @@ const Register = () => {
                 <p className="register__form--error">Passwords do not match</p>
             )
         }
-        // const formData = new FormData(event.target);
-
-        // axios.post('http://127.0.0.1:7000/login', formData)
-        // .then((res) => {
-        //     if ( res.status === 200) {
-        //         console.log(res.data);
-        //     }
-        // })
-        // .catch((err) => {
-        //      if (err.response) {
-        //         setIsError(true);
-        //         setErrorMessage(
-        //             <p className={classes.login__formError}>{err.response.data}
-        //                 or <Link to="/register">Register Here</Link>
-        //             </p>
-        //         )
-        //      }
-        // })
     }
-
 
     return (
         <div className="register">
@@ -114,7 +100,7 @@ const Register = () => {
                 <button type="submit" className="register__formButton">register</button>
                 <p className="register__formLink"><Link to="/login">Login</Link></p>
             </form>
-            
+                       
         </div>
     )
     }

@@ -55,10 +55,11 @@ def login():
 def register():
 
     data = request.form
+    
     responseObject = ''
 
     user = User.query.filter_by(email=data['email']).first()
-
+    print(user)
     if user is None:
         try:
             user = User(email=data['email'],password= generate_password_hash(data['password'], 'sha256'),created=datetime.datetime.now(), updated=datetime.datetime.now(),)
