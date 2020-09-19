@@ -34,7 +34,7 @@ const Trader = ( props ) => {
                 setStocks(<Stock 
                     key={stock.symbol} 
                     stock={stock} 
-                    buy={() => buyButtonHandler(stock.symbol, stock.price )} 
+                    buy={() => buyButtonHandler(stock.symbol, stock.latestPrice)} 
                 />
                 );
 
@@ -53,8 +53,9 @@ const Trader = ( props ) => {
 
     }
 
-    const buyButtonHandler = (stock) => {
-        console.log('buy button clicked', stock);
+    const buyButtonHandler = (symbol, price) => {
+        console.log('symbol', symbol);
+        console.log('price', price);
     }
 
     const sellButtonHandler = (id) => {
