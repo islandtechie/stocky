@@ -7,7 +7,7 @@ import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import LandingPage from './components/LandingPage/LandingPage';
-import Trader from './components/Trader/Trader';
+import Trader from './containers/Trader/Trader';
 import Portfolio from './components/Portfolio/Portfolio';
 import { AuthContext } from "./context/auth";
 
@@ -21,6 +21,10 @@ const App = () => {
     setAuthTokens(data);
   }
 
+  const clearTokens = (data) => {
+    localStorage.clear();
+    setAuthTokens(data);
+  }
   
   return (
     <AuthContext.Provider value={{ authToken, setAuthTokens: setTokens }}>
@@ -35,8 +39,9 @@ const App = () => {
           </Route>
           <Route path="/logout" render={() => {
             setAuthTokens();
+            clearTokens();
             return <Redirect to='/' />
-      
+
           }}
           />
           <Route exact path="/" component={Home}/>

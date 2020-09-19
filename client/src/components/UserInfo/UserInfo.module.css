@@ -1,0 +1,29 @@
+
+
+.userInfo {
+    max-width: 1000px;
+    margin: 0 auto .5em auto;
+    padding:1em 1em;
+    text-align: center; 
+    background-color: var(--clr-dark);
+    border: 2px solid var(--clr-accent);
+}
+
+.userInfo__currentBalance,
+.userInfo__stocksOwned {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+@media (min-width: 800px) {
+
+    .userInfo {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+}

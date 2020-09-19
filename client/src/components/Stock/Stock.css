@@ -1,0 +1,108 @@
+
+
+.stock {
+    padding: 1em;
+    border-bottom: 1px solid var(--clr-accent);
+    text-align: center;
+}
+
+.stock:first-of-type {
+    border-top: 1px solid var(--clr-accent);
+}
+
+.stock__symbol {
+    font-size: 2.5rem;
+}
+
+.stock__symbol_lastUpdated {
+    font-size: 1rem;
+    display: inline-block;
+}
+
+.stock__name {
+    font-size: 2rem;
+}
+
+.stock__info {
+    width: 80%;
+    margin: .5em auto;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    font-size: 1.5rem;
+}
+
+.stock__info span {
+    margin-left: .2em;
+    font-size: 2rem;
+}
+
+.stock__buttons {
+    
+}
+
+.stock__button {
+    background-color: var(--clr-dark);
+    color: var(--clr-accent);
+    border: 1px solid var(--clr-accent);
+    font-size: 2rem;
+    padding: .5em 1.5em;
+    margin-left: .2em;   
+}
+
+.stock__button:focus {
+
+}
+
+.stock__button:active,
+.stock__button:hover {
+    color: var(--clr-light);
+    border: 1px solid var(--clr-light);
+    cursor: pointer; 
+}
+
+@media (min-width: 800px) {
+
+    .stock {
+        display: grid;
+        grid-template-areas:"symbol symbol update button" 
+                            "name name name button"
+                            "info info info button ";
+    }
+
+    .stock__symbol,
+    .stock__name,
+    .stock__info {
+        justify-self: start;
+        
+    }
+    .stock__symbol {
+        grid-area: symbol;
+        
+    }
+
+    .stock__name {
+        grid-area: name;
+    }
+
+    .stock__symbol_lastUpdated {
+        grid-area: update;
+        align-self: center;
+    }
+        
+    .stock__info {
+        grid-area: info;
+        margin: 0;
+        
+    }
+
+    .stock__buttons {
+        grid-area: button;
+        display: flex;
+        flex-flow: column nowrap;        
+    }
+
+    .stock__button:last-of-type {
+        margin-top: .5em;       
+    }
+}

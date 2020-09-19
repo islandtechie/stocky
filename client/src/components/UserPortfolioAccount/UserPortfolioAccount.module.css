@@ -1,0 +1,52 @@
+
+.accountInfo {
+    color: var(--clr-accent);
+    text-align: center;
+    max-width: 1000px;
+}
+
+.accountInfo {
+    background-color: var(--clr-dark);
+    border: 2px solid var(--clr-accent);
+    font-size: 3rem;
+    color: var(--clr-accent);
+    margin: 0 auto;
+    width: 90%;
+}
+
+.accountInfo_amounts {
+    
+}
+
+
+
+.accountInfo__balanceTag,
+.accountInfo__assetTag,
+.accountInfo__holdingTag {
+    display: block;
+    font-variant: small-caps;
+    letter-spacing: .1em;
+    font-size: 1.5rem;
+}
+
+.accountInfo__balanceAmount,
+.accountInfo__assetAmount,
+.accountInfo__holdingAmount {
+    display: block;
+    font-weight: 700;
+}
+
+
+.accountInfo__balanceAmount,
+.accountInfo__holdingAmount {
+    font-size: 2rem;
+}
+
+@media (min-width: 800px) {
+    .accountInfo_amounts {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        padding: .5em;
+    }
+}

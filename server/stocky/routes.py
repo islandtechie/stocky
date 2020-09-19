@@ -47,6 +47,7 @@ def login():
 
     return make_response(jsonify(responseObject)), responseObject['code']
 
+
 @app.route('/register', methods=['POST'])
 def register():
 
