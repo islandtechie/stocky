@@ -14,3 +14,16 @@ class User(db.Model):
 class UserSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = User
+
+
+class UserTrades(db.Model):
+    id = db.Column(db.Integer, primary_key)
+    stock_name = db.Column(db.String(6), nullable=False)
+    stock_price = db.Column(db.Integer, nullable=False)
+    owned = db.Column(db.Boolean, nullable=False)
+    status = db.Column(db.Boolean, nullable=False)
+    created = db.Column(db.DateTime)
+    updated = db.Column(db.DateTime)
+
+    def __repr__(self):
+        return f"Stock('{self.name}')"
