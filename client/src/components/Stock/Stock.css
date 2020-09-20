@@ -14,6 +14,16 @@
     font-size: 2.5rem;
 }
 
+.stock__symbolLink {
+    
+    color: 1px solid var(--clr-accent);
+}
+
+.stock__symbolLink:hover {
+    
+    text-decoration: underline;
+}
+
 .stock__symbol_lastUpdated {
     font-size: 1rem;
     display: inline-block;

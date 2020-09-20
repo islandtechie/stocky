@@ -3,12 +3,17 @@ import React from 'react';
 import { faDollarSign, faArrowAltCircleUp, faArrowAltCircleDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import './Stock.css'
+import { Link } from 'react-router-dom';
 
 
 const stock = ({ stock, buy }) => {    
     return (
         <div className="stock">
-            <div className="stock__symbol">{stock.symbol}</div>
+            <div className="stock__symbol">
+                <Link className="stock__symbolLink" to="/trader/stock-info">
+                    {stock.symbol}
+                </Link>
+            </div>
             <div className="stock__name">{stock.companyName}</div>
             <div className="stock__symbol_lastUpdated">last updated:{new Date(stock.latestUpdate).toLocaleTimeString()}</div>
             <div className="stock__info">

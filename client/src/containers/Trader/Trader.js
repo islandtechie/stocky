@@ -5,10 +5,15 @@ import UserInfo from '../../components/UserInfo/UserInfo';
 import Stocks from '../../components/Stocks/Stocks';
 import Stock from '../../components/Stock/Stock';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { useAuth } from '../../context/auth';
+import { useStock } from '../../context/stock';
 
 const Trader = ( props ) => {
     const [stocks, setStocks] = useState('Start a Search to begin Trading.');
     const [keyword, setKeyword] = useState();
+    const { authToken } = useAuth();
+    const { setStockInfo } = useStock();
+    
     const API_KEY = 'Tsk_0f2bb5a7c1d34a188b3e4a52059822e0';
 
     const searchInputHandler = (e) => {
@@ -30,6 +35,7 @@ const Trader = ( props ) => {
         axios(options)
         .then(res => {
             let stock = res.data;
+            setStockInfo(stock);
             console.log(stock);
                 setStocks(<Stock 
                     key={stock.symbol} 
@@ -56,6 +62,26 @@ const Trader = ( props ) => {
     const buyButtonHandler = (symbol, price) => {
         console.log('symbol', symbol);
         console.log('price', price);
+
+
+        let options ={
+            method: 'post',
+            baseURL: 'http://127.0.0.1:5000',
+            url: `/buy-stock`,
+            data: {
+                token: authToken,
+                symbol: symbol,
+                price: price
+            }
+        }
+        axios(options)
+        .then(res => {
+            let stock = res.data;
+            console.log(stock);
+        })
+        .catch(err => {
+            setStocks('Please Try again');
+        });
     }
 
     const sellButtonHandler = (id) => {

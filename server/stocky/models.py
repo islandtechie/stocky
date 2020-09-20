@@ -17,7 +17,7 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
 
 
 class UserTrades(db.Model):
-    id = db.Column(db.Integer, primary_key)
+    id = db.Column(db.Integer, primary_key=True)
     stock_name = db.Column(db.String(6), nullable=False)
     stock_price = db.Column(db.Integer, nullable=False)
     owned = db.Column(db.Boolean, nullable=False)

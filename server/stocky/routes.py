@@ -47,6 +47,13 @@ def login():
 
     return make_response(jsonify(responseObject)), responseObject['code']
 
+@app.route('/buy-stock', methods=['POST'])
+@cross_origin()
+def buy_stock():
+    print(request)
+    return 'you made it to buy', 200
+
+
 
 @app.route('/register', methods=['POST'])
 def register():
