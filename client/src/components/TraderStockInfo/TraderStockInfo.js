@@ -2,11 +2,13 @@ import React from 'react';
 import { useStock } from '../../context/stock';
 
 const TraderStockInfo = ( props ) => {
-    const { stockInfo } = useStock();
+    const { stocks } = useStock();
+
+    console.log(stocks.name);
 
     return (
         <div>
-            {stockInfo}
+            {/* {stocks} */}
         </div>
     )
 }

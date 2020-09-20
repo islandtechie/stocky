@@ -1,29 +1,41 @@
-import React, { useState } from 'react';
+import React, { Children, useState } from 'react';
+import { Route } from 'react-router-dom';
 import axios from 'axios';
 import './Trading.css';
-import UserInfo from '../../components/UserInfo/UserInfo';
-import Stocks from '../../components/Stocks/Stocks';
+import Home from './Home';
 import Stock from '../../components/Stock/Stock';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../../context/auth';
-import { useStock } from '../../context/stock';
+import { useStock, StockContext } from '../../context/stock';
+
+const API_KEY = 'Tsk_0f2bb5a7c1d34a188b3e4a52059822e0';
 
 const Trader = ( props ) => {
-    const [stocks, setStocks] = useState('Start a Search to begin Trading.');
-    const [keyword, setKeyword] = useState();
-    const { authToken } = useAuth();
-    const { setStockInfo } = useStock();
-    
-    const API_KEY = 'Tsk_0f2bb5a7c1d34a188b3e4a52059822e0';
-
-    const searchInputHandler = (e) => {
-        setKeyword(e.target.value)
+   const [userInfo, setUserInfo] = useState(
+    {
+        balance: 100000,
+        stocks_owned: 100
     }
+   );
 
-    const getStocks = (e) => {
-        e.preventDefault();
-        setStocks('Loading...');
+   const [stocks, setStocks] = useState();
+   const [isLoading, setIsLoading] = useState(false);
+   const [isError, setIsError] = useState(false);
+   const [errorMessage, setErrorMessage] = useState('');
 
+   const getUserInfo = () => {
+       setUserInfo(prevUserInfo => [
+        ...prevUserInfo,
+        {
+          balance: 100000,
+          stocks_owned: 100
+        }
+      ])
+   }
+
+    const getStocks = ( keyword ) => {
+        console.log(keyword);
+        setIsLoading(true);
         let options ={
             method: 'get',
             baseURL: 'https://sandbox.iexapis.com/stable',
@@ -34,16 +46,9 @@ const Trader = ( props ) => {
         }
         axios(options)
         .then(res => {
-            let stock = res.data;
-            setStockInfo(stock);
-            console.log(stock);
-                setStocks(<Stock 
-                    key={stock.symbol} 
-                    stock={stock} 
-                    buy={() => buyButtonHandler(stock.symbol, stock.latestPrice)} 
-                />
-                );
-
+            let data = res.data;
+            setStocks(data)
+            setIsLoading(false);
             // setStocks(data.map((stock) => (
             //     <Stock 
             //     key={stock.symbol} 
@@ -54,60 +59,29 @@ const Trader = ( props ) => {
             // )));
         })
         .catch(err => {
-            setStocks('Stock not found, Please Try again');
+            setIsError('Stock not found, Please Try again');
         });
 
-    }
+}
 
-    const buyButtonHandler = (symbol, price) => {
-        console.log('symbol', symbol);
-        console.log('price', price);
-
-
-        let options ={
-            method: 'post',
-            baseURL: 'http://127.0.0.1:5000',
-            url: `/buy-stock`,
-            data: {
-                token: authToken,
-                symbol: symbol,
-                price: price
-            }
-        }
-        axios(options)
-        .then(res => {
-            let stock = res.data;
-            console.log(stock);
-        })
-        .catch(err => {
-            setStocks('Please Try again');
-        });
-    }
-
-    const sellButtonHandler = (id) => {
-        console.log('sell button clicked', id);
-    }
     return (
-    <div className="trading">
-        <UserInfo />
-        <form className="trading__stockSearchForm" onSubmit={getStocks}>
-            <input 
-                type="text" 
-                className="trading__stockSearchInput" 
-                name="stock-search" 
-                id="stock-search" 
-                placeholder="Search Stocks here" 
-                aria-placeholder="Search Stocks here"
-                onChange={searchInputHandler}
-            />
-            <button type="submit" className="trading__stockSearchButton">Search</button>
-        </form>
-        <Stocks>
-            {stocks}
-        </Stocks>
-            
-    </div>
-)
+        <StockContext.Provider 
+            value={
+                {
+                    userInfo, 
+                    search: getStocks,
+                    isLoading,
+                    isError,
+                    stocks
+                }
+            }
+        >
+            <div className="trading">
+                {props.children}
+            </div>
+        </StockContext.Provider>
+        
+    )
 }
 
 export default Trader;
