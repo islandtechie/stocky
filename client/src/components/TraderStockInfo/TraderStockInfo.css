@@ -1,0 +1,47 @@
+.traderstockinfo {
+    max-width: 1000px;
+    margin: 0 auto;
+
+}
+
+.traderstockinfo h1 {
+    font-size: 2.5rem;
+}
+
+.traderstockinfo h1 span {
+    font-size: 2rem;
+}
+
+.traderstockinfo h2 {
+    font-size: 2rem;
+}
+
+.company-details {
+    border: 1px solid green;
+    font-size: 1rem;
+}
+
+.company-info p {
+    margin: 0;
+}
+
+.address span {
+    display: block;
+}
+
+@media (min-width: 800px) {
+
+    .company-details {
+        display: flex;
+        flex-flow: row wrap;
+    }
+
+    .company-info,
+    .address {
+        width: 50%;
+    }
+
+    .description {
+        font-size: 1rem;
+    }
+}

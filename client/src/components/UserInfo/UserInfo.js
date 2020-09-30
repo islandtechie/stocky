@@ -1,13 +1,12 @@
 import React from 'react';
-import classes from './UserInfo.module.css'
-import { useStock } from '../../context/stock';
+import classes from './UserInfo.module.css';
 
-const UserInfo = () => {
-    const { userInfo } = useStock();
+const UserInfo = ( { user } ) => {
+    const {balance, owned } = user;
     return (
         <div className={classes.userInfo}>
-            <span className={classes.userInfo__currentBalance}>Current Balance: ${userInfo.balance}</span>
-            <span className={classes.userInfo__stocksOwned}>Stocks Owned: {userInfo.stocks_owned}</span>
+            <span className={classes.userInfo__currentBalance}>Current Balance: ${balance}</span>
+            <span className={classes.userInfo__stocksOwned}>Stocks Owned: {owned}</span> 
         </div>
     )
 }

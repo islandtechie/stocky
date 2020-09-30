@@ -53,6 +53,7 @@ body {
 }
 
 body {
+  position: relative;
   background-color: var(--clr-dark);
   color: var(--clr-accent);
   font-family: var(--ff-primary);

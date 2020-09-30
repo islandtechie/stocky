@@ -50,7 +50,7 @@ def login():
 @app.route('/buy-stock', methods=['POST'])
 @cross_origin()
 def buy_stock():
-    print(request)
+    print(request.form['price'])
     return 'you made it to buy', 200
 
 

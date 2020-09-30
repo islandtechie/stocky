@@ -3,33 +3,26 @@ import './Stocks.css';
 import Stock from '../Stock/Stock';
 import { useStock } from '../../context/stock';
 
-const Stocks = ( props ) => {
-    const [content, setContent] = useState();
-    const { stocks, isLoading, isError, errorMessage } = useStock();
-
-    useEffect(() => {
-        if (isLoading) {
-            setContent(<p>Loading...</p>);
-        }
-
-        if (stocks) {
-            setContent(() => (
-                <Stock 
-                    key={stocks.symbol} 
-                    stock={stocks} 
-                    buy={() => buyButtonHandler(stocks.symbol, stocks.latestPrice)} 
-                />
-            ))
-        }
-    }, [isLoading])
-
+const Stocks = ( {isLoading, stocks, showModal} ) => { 
+    
+    const [stock, setStock] = useState();
     
     const buyButtonHandler = (symbol, price) => {
-        console.log(symbol, price);
+        // console.log(symbol, price);
     }
+
+    useEffect(() => {
+        if (stocks) 
+        {
+            setStock(stocks.map((stock) => {
+                 return <Stock key={stock.symbol} stock={stock} showModal={showModal}/>
+            }))
+        }
+    }, [stocks, showModal]);
+    
     return (
         <div className="stocks">
-            {content}
+            {isLoading ? 'Loading...' : stock}
         </div>
     )
 }

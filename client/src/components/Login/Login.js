@@ -8,8 +8,6 @@ const Login = ( props ) => {
 
     const [email, setEmail] = useState('jane@doe.com');
     const [password, setPassword] = useState('password');
-    const [isError, setIsError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState();
     const { setAuthTokens, authToken } = useAuth();
     let history = useHistory();
 
@@ -50,7 +48,6 @@ const Login = ( props ) => {
         <div className={classes.login}>
             <form className={classes.login__form} onSubmit={login}>
                 <h1 className={classes.login__formTitle}>login</h1>
-                {isError ? errorMessage : ''}
                 <label htmlFor="email">
                     <input 
                         type="email" 

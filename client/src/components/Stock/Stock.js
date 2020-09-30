@@ -6,11 +6,11 @@ import './Stock.css'
 import { Link } from 'react-router-dom';
 
 
-const stock = ({ stock, buy }) => {    
+const stock = ({ stock, showModal }) => {    
     return (
         <div className="stock">
             <div className="stock__symbol">
-                <Link className="stock__symbolLink" to="/trader/stock-info">
+                <Link className="stock__symbolLink" to={`/trader/stock-info/${stock.symbol}`}>
                     {stock.symbol}
                 </Link>
             </div>
@@ -34,7 +34,7 @@ const stock = ({ stock, buy }) => {
                 <button  
                     type="button"
                     className="stock__button"
-                    onClick={buy}
+                    onClick={() => showModal(stock.latestPrice, stock.symbol)}
                 >buy</button>
             </div>
         </div>

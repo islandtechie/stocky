@@ -1,86 +1,75 @@
-import React, { Children, useState } from 'react';
-import { Route } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Trading.css';
-import Home from './Home';
-import Stock from '../../components/Stock/Stock';
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
-import { useAuth } from '../../context/auth';
-import { useStock, StockContext } from '../../context/stock';
 
-const API_KEY = 'Tsk_0f2bb5a7c1d34a188b3e4a52059822e0';
+import UserInfo from '../../components/UserInfo/UserInfo';
+import Search from '../../components/Search/Search';
+import Stocks from '../../components/Stocks/Stocks';
+import Modal from '../../components/Modal/Modal';
+
+
 
 const Trader = ( props ) => {
-   const [userInfo, setUserInfo] = useState(
-    {
-        balance: 100000,
-        stocks_owned: 100
+
+    const [userInfo, setUserInfo] = useState({ balance: 100000, owned: 100 });
+    const [isLoading, setIsLoading] = useState(false);
+    const [isError, setIsError] = useState(false);
+     const [errorMessage, setErrorMessage] = useState('');
+    const [stocks, setStocks] = useState();
+    const [stockInfo, setStockInfo] = useState({
+        price: 0, 
+        symbol: ''
+    });
+    const [isModalActive, setIsModalActive] = useState(false);
+
+    const buyNowButtonHandler = (price, symbol) => {
+        console.log(price, symbol);
+        let data = new FormData();
+        data.append('price', price);
+        data.append('symbol', symbol);
+
+        axios.post('http://127.0.0.1:5000/buy-stock', data)
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+
     }
-   );
 
-   const [stocks, setStocks] = useState();
-   const [isLoading, setIsLoading] = useState(false);
-   const [isError, setIsError] = useState(false);
-   const [errorMessage, setErrorMessage] = useState('');
-
-   const getUserInfo = () => {
-       setUserInfo(prevUserInfo => [
-        ...prevUserInfo,
-        {
-          balance: 100000,
-          stocks_owned: 100
-        }
-      ])
-   }
-
-    const getStocks = ( keyword ) => {
-        console.log(keyword);
-        setIsLoading(true);
-        let options ={
-            method: 'get',
-            baseURL: 'https://sandbox.iexapis.com/stable',
-            url: `/stock/${keyword}/quote`,
-            params: new URLSearchParams({
-                token: API_KEY,
-            })
-        }
-        axios(options)
-        .then(res => {
-            let data = res.data;
-            setStocks(data)
-            setIsLoading(false);
-            // setStocks(data.map((stock) => (
-            //     <Stock 
-            //     key={stock.symbol} 
-            //     stock={stock} 
-            //     buy={() => buyButtonHandler(stock.id)} 
-            //     sell={() => sellButtonHandler(stock.id)} 
-            // />
-            // )));
-        })
-        .catch(err => {
-            setIsError('Stock not found, Please Try again');
+    const showModal = (price, symbol) => {
+        setIsModalActive(true);
+        setStockInfo({
+            price: price, 
+            symbol: symbol
         });
+    }
 
-}
+    const cancelButtonHandler = () => {
+        setIsModalActive(false)
+    }
 
     return (
-        <StockContext.Provider 
-            value={
-                {
-                    userInfo, 
-                    search: getStocks,
-                    isLoading,
-                    isError,
-                    stocks
-                }
-            }
-        >
             <div className="trading">
-                {props.children}
+                <Modal
+                    stock={stockInfo}
+                    active={isModalActive} 
+                    cancel={cancelButtonHandler} 
+                    buy={buyNowButtonHandler}
+                />
+                <UserInfo user={userInfo}/>
+                <Search 
+                    setStocks={setStocks} 
+                    setIsLoading={setIsLoading} 
+                    setIsError={setIsError}
+                />
+                <Stocks 
+                    stocks={stocks}
+                    isLoading={isLoading}
+                    showModal={showModal}
+                />
             </div>
-        </StockContext.Provider>
-        
     )
 }
 

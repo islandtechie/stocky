@@ -1,0 +1,28 @@
+.modal {
+    border: 2px solid var(--clr-accent);
+    background-color: var(--clr-dark);
+    position: absolute;
+    padding: .5em;
+    margin: auto auto;
+    width: 600px;
+    height: 400px;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.backdrop::before {
+    background-color: var(--clr-light);
+    opacity: .2;
+    position: absolute;
+    content: '';
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.hide {
+    display: none;
+}
