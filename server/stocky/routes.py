@@ -4,7 +4,7 @@ from flask_cors import cross_origin
 from sqlalchemy import exc
 from werkzeug.security import generate_password_hash, check_password_hash
 from stocky import app, db, ma
-from stocky.models import User
+from stocky.models import User, UserTrades
 
 @app.route('/login', methods=['POST'])
 @cross_origin()
@@ -50,7 +50,7 @@ def login():
 @app.route('/buy-stock', methods=['POST'])
 @cross_origin()
 def buy_stock():
-    print(request.form['price'])
+    print(request.form)
     return 'you made it to buy', 200
 
 

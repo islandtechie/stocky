@@ -16,6 +16,7 @@ const Trader = ( props ) => {
     const [isError, setIsError] = useState(false);
      const [errorMessage, setErrorMessage] = useState('');
     const [stocks, setStocks] = useState();
+    const [shareAmount, setShareAmount] = useState();
     const [stockInfo, setStockInfo] = useState({
         price: 0, 
         symbol: ''
@@ -27,6 +28,7 @@ const Trader = ( props ) => {
         let data = new FormData();
         data.append('price', price);
         data.append('symbol', symbol);
+        data.append('amount', shareAmount);
 
         axios.post('http://127.0.0.1:5000/buy-stock', data)
           .then(function (response) {
@@ -36,6 +38,11 @@ const Trader = ( props ) => {
             console.log(error);
           });
 
+    }
+
+    const shareAmountInputHandler = (e) => {
+        console.log(e.target.value);
+        setShareAmount(e.target.value);
     }
 
     const showModal = (price, symbol) => {
@@ -57,6 +64,8 @@ const Trader = ( props ) => {
                     active={isModalActive} 
                     cancel={cancelButtonHandler} 
                     buy={buyNowButtonHandler}
+                    setShares={shareAmountInputHandler}
+                    shares={shareAmount}
                 />
                 <UserInfo user={userInfo}/>
                 <Search 
