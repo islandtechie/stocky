@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Trading.css';
 
+import { useAuth } from '../../context/auth';
+
 import UserInfo from '../../components/UserInfo/UserInfo';
 import Search from '../../components/Search/Search';
 import Stocks from '../../components/Stocks/Stocks';
@@ -22,6 +24,7 @@ const Trader = ( props ) => {
         symbol: ''
     });
     const [isModalActive, setIsModalActive] = useState(false);
+    const { authToken } = useAuth();
 
     const buyNowButtonHandler = (price, symbol) => {
         console.log(price, symbol);
@@ -30,7 +33,12 @@ const Trader = ( props ) => {
         data.append('symbol', symbol);
         data.append('amount', shareAmount);
 
-        axios.post('http://127.0.0.1:5000/buy-stock', data)
+        axios.post('http://127.0.0.1:5000/buy-stock',{
+            data: data
+            // headers: {
+            //     'x-access-token' : authToken
+            // } 
+        })
           .then(function (response) {
             console.log(response);
           })

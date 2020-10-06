@@ -22,8 +22,7 @@ class UserTrades(db.Model):
     stock_price = db.Column(db.Integer, nullable=False)
     owned = db.Column(db.Boolean, nullable=False)
     status = db.Column(db.Boolean, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     created = db.Column(db.DateTime)
     updated = db.Column(db.DateTime)
 
-    def __repr__(self):
-        return f"Stock('{self.name}')"

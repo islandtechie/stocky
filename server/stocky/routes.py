@@ -1,4 +1,5 @@
 import datetime, urllib, jwt
+from jwt.exceptions import ExpiredSignatureError
 from flask import request, flash, make_response, jsonify
 from flask_cors import cross_origin
 from sqlalchemy import exc
@@ -20,7 +21,7 @@ def login():
             print('PASS')
             #create token for user
             payload = {
-                'exp': datetime.datetime.utcnow() + datetime.timedelta(days=0, seconds=5),
+                'exp': datetime.datetime.utcnow() + datetime.timedelta(days=1, seconds=0),
                 'iat': datetime.datetime.utcnow(),
                 'sub': user.id
             }
@@ -50,8 +51,44 @@ def login():
 @app.route('/buy-stock', methods=['POST'])
 @cross_origin()
 def buy_stock():
+    data = None
+    trades = None
+    response = None
     print(request.form)
-    return 'you made it to buy', 200
+    # if 'x-access-token' in request.headers:
+    #     data = request.headers['x-access-token']
+    # else:
+    #     return "Unauthorized", 401
+        
+    try:
+        data = jwt.decode(data, app.config.get('SECRET_KEY'),algorithm='HS256')
+
+        user =  user = User.query.filter_by(id=data['sub']).first_or_404(description="user does not exist")
+
+        if user:
+            #check if user already owns this stock
+            #trades = UserTrades.query.filter_by(id=user.id, stock_name='aapl').first()
+            trade = UserTrades(
+                stock_name = request.form['symbol'],
+                stock_price = int(request.form['price']),
+                owned = true,
+                status = true,
+                user_id = user.id,
+                created = datetime.datetime.now(),
+                updated = datetime.datetime.now()
+            )
+            
+            db.session.add(trade)
+            db.session.commit()
+            responseObject = {'status': 'success', 'message': 'Trade Successful', 'code': 201}
+            return make_response(jsonify(responseObject)), responseObject['code']
+    except ExpiredSignatureError as e:
+        return 'Something went wrong', 401
+    except Exception as e:
+        response = {
+            'message' : f'{e}'
+        }
+        return make_response(jsonify(response), 404)
 
 
 
